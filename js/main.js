@@ -5,6 +5,16 @@ import { renderMovieDetailsView } from "./components/MovieDetails.js";
 const app = document.getElementById("app");
 
 async function loadView() {
+  if (document.startViewTransition) {
+    document.startViewTransition(async () => {
+      await renderCurrentView();
+    });
+  } else {
+    await renderCurrentView();
+  }
+}
+
+async function renderCurrentView() {
   const hash = location.hash || "#/search";
   const movieMatch = hash.match(/^#\/movie\/(.+)/);
 
